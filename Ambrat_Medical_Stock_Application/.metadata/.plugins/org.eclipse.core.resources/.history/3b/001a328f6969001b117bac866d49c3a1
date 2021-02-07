@@ -1,0 +1,6 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.UserRegisteration;
+
+public interface RegisterationInterface {
+	public void  registerUser(Registeration r);
+
+}

@@ -1,0 +1,57 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.UserRegisteration;
+
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.springframework.stereotype.Service;
+
+import com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login.UserRegisteration;
+
+import org.hibernate.SQLQuery;
+
+
+@Service("loginService")
+public class LoginModelImpl implements LoginInterface {
+	private SessionFactory sf;
+	
+	public LoginModelImpl() {
+		
+	}
+	
+	public int checkUserExist(String userName) {
+		Session session= null;
+		try {
+			Configuration config = new Configuration().configure("hibernate.xml").addAnnotatedClass(Login.class);
+	        config.addAnnotatedClass(UserRegisteration.class);
+
+
+		     org.hibernate.service.ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
+		      sf = config.buildSessionFactory(reg);
+		 session= sf.openSession();
+		session.beginTransaction();
+		
+        SQLQuery sql = session.createSQLQuery("select count(1) as count from userRegisteration where LOGINID = :userName ");
+        sql.addEntity(UserRegisteration.class);
+        sql.addScalar("count", Hibernate.LONG);
+		sql.setParameter("userName", userName);
+		int count  = (int) sql.uniqueResult();
+		session.getTransaction().commit();
+		if(count > 0)
+			return count;
+		
+	}
+	
+	
+	catch(Exception e) {
+		System.out.println(e.getMessage());
+	}
+		
+		finally {
+			session.close();
+		}
+		return 0;
+	}
+}

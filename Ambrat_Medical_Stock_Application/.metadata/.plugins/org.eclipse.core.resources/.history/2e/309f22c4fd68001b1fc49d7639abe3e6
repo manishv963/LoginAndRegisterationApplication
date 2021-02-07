@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	    <link rel="stylesheet" th:href="@{/login.css}"/>
+	<script type="text/javascript" th:src="@{login/login.js}"></script>
+	
+	<link rel="stylesheet" href="login/login.css">
+		<link rel="stylesheet" href="BootStrapJquery/bootstrap.min.css">
+		<script  type="text/javascript" src="login/login.js" /></script>
+	
+		<script type="text/javascript" src="BootStrapJquery/bootstrap.min.js" ></script>
+	
+		<script  type="text/javascript" src="BootStrapJquery/jquery.min.js" ></script>
+	
+    <meta charset="UTF-8">
+    <title>Vendor and Bill Management - Login</title>
+    
+
+</head>
+<body>
+<div class="login-form">
+    <h1>Login Form</h1>
+    <div class="form-group "> <input type="text" class="form-control" placeholder="Username " id="userName"> <i class="mdi mdi-account"></i> </div>
+    <div class="form-group log-status"> <input type="password" class="form-control" placeholder="Password" id="password">
+     <i class="mdi mdi-lock"></i> </div> <span class="alert">Invalid Credentials</span> <a class="link" href="#">Lost your password?</a> 
+     <button type="button" class="log-btn" id="loginButton" onclick="checkLogin()"><i class="mdi mdi-account"></i> Log in</button>
+     <br>
+      <a id="signUpButton" class="link" href="#">Click Here to Sign Up</a> 
+</div>
+</body>
+</html>
+<script>
+
+$(document).ready(function(){
+	
+	
+	function unloadJS(scriptName) {
+		var head = document.getElementsByTagName(‘head’).item(0);
+		var js = document.getElementById(scriptName);
+		js.parentNode.removeChild(js);
+		}
+	$('#signUpButton').click(function () {
+	
+		$.post("/signUp");
+
+	});
+$('#loginButton').click(function () {
+
+  debugger;
+	var userName = $("#userName").val()
+	var password = $("#password").val()
+	$.post('checkLogin', {userName: userName,password:password}, function(response){ 
+		if(response.includes('User does not exist')){
+			$(".alert").css("display","block")
+		}
+		alert(response)
+		return false;
+	});
+	
+});
+});
+</script>

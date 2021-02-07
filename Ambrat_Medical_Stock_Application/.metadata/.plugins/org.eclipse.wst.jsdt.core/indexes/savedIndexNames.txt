@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+E:\MRV_Technologies\Ambrat_Medical_Stock_Application\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2533236908.index
+1497200408.index
+4038607907.index
+3879371730.index
+2413786696.index

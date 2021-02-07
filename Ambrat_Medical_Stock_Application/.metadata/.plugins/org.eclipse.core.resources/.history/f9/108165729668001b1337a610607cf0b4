@@ -1,0 +1,40 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+import java.sql.Date;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="userRegisteration")
+public class UserRegisteration {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="SRNO")
+	private long serialNo;
+	
+	private String loginId;
+	private String loginPassword;
+	private String fullName;
+	private String email;
+
+	private String mobile;
+	private Date reisterationDate;
+	public Date getReisterationDate() {
+		return reisterationDate;
+	}
+	public void setReisterationDate(Date reisterationDate) {
+		this.reisterationDate = reisterationDate;
+	}
+	@Override
+	public String toString() {
+		return "UserRegisteration [serialNo=" + serialNo + ", loginId=" + loginId + ", loginPassword=" + loginPassword
+				+ ", fullName=" + fullName + ", email=" + email + ", mobile=" + mobile + ", reisterationDate="
+				+ reisterationDate + "]";
+	}
+	
+
+}

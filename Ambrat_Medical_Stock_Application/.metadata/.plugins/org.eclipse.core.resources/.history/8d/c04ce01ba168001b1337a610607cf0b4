@@ -1,0 +1,39 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.UserRegisteration;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+public class LoginController {
+	private final LoginInterface loginDAO ;
+	
+	//using constructor  for dependenct injection
+	public LoginController(@Qualifier("loginService")LoginInterface loginService){
+		this.loginDAO= loginService;
+	}
+	
+	 @RequestMapping({"","/","/index","/index.html","/login"})
+	    public String index()
+	    {
+	        return "login/login.html";
+	    }
+	 
+	 
+	 @RequestMapping(path="/checkLogin", method = RequestMethod.POST)
+	 @ResponseBody
+	    public String checkAndInsertLoginCredentials(@RequestParam(value = "userName", required = true) String userName,
+	    		@RequestParam(value = "password", required = true) String password)
+	    {
+		 	int userExist = loginDAO.checkUserExist(userName);
+		 	if(userExist > 0)
+		 		return "User exist";
+		 	else
+		 		return "User does not exist";
+		 	
+		 
+	    }
+	 
+}

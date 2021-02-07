@@ -1,0 +1,48 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.springframework.stereotype.Service;
+
+
+@Service("loginService")
+public class LoginModelImpl implements LoginInterface {
+	private SessionFactory sf;
+	
+	public LoginModelImpl() {
+		
+	}
+	
+	public int checkUserExist(String userName) {
+		Session session= null;
+		try {
+			Configuration config = new Configuration().configure("hibernate.xml").addAnnotatedClass(UserRegisteration.class);
+		    
+
+		     org.hibernate.service.ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
+		      sf = config.buildSessionFactory(reg);
+		 session= sf.openSession();
+		session.beginTransaction();
+		Query q= session.createQuery("select count(1) from userRegisteration where LOGINID = :userName ");
+		q.setParameter("userName", userName);
+		int count  = (int) q.uniqueResult();
+		session.getTransaction().commit();
+		if(count > 0)
+			return count;
+		
+	}
+	
+	
+	catch(Exception e) {
+		System.out.println(e.getMessage());
+	}
+		
+		finally {
+			session.close();
+		}
+		return 0;
+	}
+}

@@ -1,0 +1,38 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.UserRegisteration;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class RegisterationController {
+	private final RegisterationInterface registerationDAO ;
+	
+	//using constructor  for dependenct injection
+	public RegisterationController(@Qualifier("registerationService")RegisterationInterface registerationService){
+		this.registerationDAO= registerationService;
+	}
+	
+	 
+	 
+	 @RequestMapping(path="/registerUser", method = RequestMethod.POST)
+	 @ResponseBody
+	    public String insertRegisterationDetail(@RequestParam(value = "formInput", required = true) String registerationForm)
+	    {
+		 	String ss="fullName=Manish%20Vasandnani&loginId=purandhar&loginPassword=avi123***&email=manishv963%40gmail.com&mobile=08329241599";
+		 	ss= ss.replaceAll("%20", "");
+		 	//loginDAO.saveLoginAttempt(userName,password);
+		 	//int userExist = loginDAO.checkUserExist(userName);
+		 /*	if(userExist > 0)
+		 		return "User exist";
+		 	else
+		 		return "User does not exist";
+		 */	
+		 return "";
+	    }
+	 
+	 
+}

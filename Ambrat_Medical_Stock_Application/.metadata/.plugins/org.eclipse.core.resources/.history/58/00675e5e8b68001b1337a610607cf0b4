@@ -1,0 +1,20 @@
+<script>
+$('#loginButton').click(function () {
+
+  debugger;
+	var userName = $("#userName").val()
+	var password = $("#password").val()
+	
+	$.ajax({
+	    url:  "/checkLogin",
+	    async: false,
+	    data: {userName: userName,password:password},
+	    dataType: 'html',
+	    success: function (data) {
+	        alert(data);
+	    }
+	});
+	
+});
+
+</script>

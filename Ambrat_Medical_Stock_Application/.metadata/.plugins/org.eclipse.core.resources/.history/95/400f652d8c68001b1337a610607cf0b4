@@ -1,0 +1,23 @@
+
+$(document).ready(function() {
+	
+	alert("Ss")
+
+$('#loginButton').click(function () {
+
+  debugger;
+	var userName = $("#userName").val()
+	var password = $("#password").val()
+	
+	$.post({
+	    url:  "/checkLogin",
+	    async: false,
+	    data: {userName: userName,password:password},
+	    dataType: 'html',
+	    success: function (data) {
+	        alert(data);
+	    }
+	});
+	
+});
+});

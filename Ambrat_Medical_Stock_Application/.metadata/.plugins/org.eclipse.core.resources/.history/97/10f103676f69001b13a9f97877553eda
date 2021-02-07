@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	    <link rel="stylesheet" th:href="@{/login.css}"/>
+	
+	<link rel="stylesheet" href="login/login.css">
+		<link rel="stylesheet" href="BootStrapJquery/bootstrap.min.css">
+		<script  type="text/javascript" src="login/login.js" /></script>
+	
+		<script type="text/javascript" src="BootStrapJquery/bootstrap.min.js" ></script>
+	
+		<script  type="text/javascript" src="BootStrapJquery/jquery.min.js" ></script>
+	
+    <meta charset="UTF-8">
+    <title>Vendor and Bill Management - SignUp</title>
+    
+
+</head>
+<body>
+<div class="login-form">
+    <h1>Registeration Form</h1>
+	<form id= "signUpForm" method="post">
+    <div class="form-group "> <input type="text" class="form-control form-control-lg" name="fullName" placeholder="Full Name" id="fullName"  maxlength="100"> <i class="mdi mdi-account"></i> </div>
+
+    <div class="form-group "> <input type="text" class="form-control form-control-lg"  name="loginId" placeholder="Username " id="userName"   maxlength="10"> <i class="mdi mdi-account"></i> </div>
+    <div class="form-group log-status"> <input class="form-control form-control-lg" type="password"  name="loginPassword" placeholder="Password" id="password"   maxlength="20"></div>
+        <div class="form-group log-status"> <input class="form-control form-control-lg" type="password"  placeholder="Confirm Password" id="confirmPassword"   maxlength="20"></div>
+    <div class="form-group log-status"> <input class="form-control form-control-lg" type="email"  name="email" placeholder="Email" id="email"   maxlength="100"></div>
+    
+    <div class="form-group log-status"> <input class="form-control form-control-lg" type="text" name="mobile" placeholder="Mobile Number" id="mobileNumber"   maxlength="10"></div>
+     
+    </form>
+     
+          <button type="button" class="log-btn" id="signUpButton" onclick="checkLogin()"><i class="mdi mdi-account"></i> Log in</button>
+     
+     <br>
+</div>
+</body>
+</html>
+<script>
+
+$(document).ready(function(){
+	
+
+$('#signUpButton').click(function () {
+
+  
+	
+	var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+	alert($("#email").val().match(mailformat))
+	
+	alert($("#password").val() != $("#confirmPassword").val())
+  var input=$("#fullName").val()+"-"+$("#userName").val()+"-"+$("#password").val()+"-"+$("#email").val()+"-"+$("#mobileNumber").val()
+  
+	var userName = $("#userName").val()
+	var password = $("#password").val()
+	$.post('/registerUser', {formInput: input}, function(response){ 
+		debugger
+		
+		console.log(response)
+		if(response.includes('/login')){
+			alert("Registeration Successful. Kindly Proceed to Login")
+			location.href = response;
+			
+		}
+		
+		else{
+			
+		alert(response)
+		return false;
+		
+		}
+	});
+	
+});
+});
+</script>

@@ -1,0 +1,14 @@
+<script>
+$('#mybtn').click(function () {
+
+    $.post('checkLogin', function (data) {
+
+        $("ul#output > li").remove();
+
+        $.each(data, function (key, value) {
+            $("#output").append('<li>' + value['name'] + " " + value['population'] + '</li>');
+        });
+    });
+});
+
+</script>

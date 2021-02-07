@@ -1,0 +1,78 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.UserRegisteration;
+
+import java.math.BigInteger;
+import java.time.LocalDateTime;
+
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.springframework.stereotype.Service;
+
+import com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login.Login;
+
+import org.hibernate.SQLQuery;
+
+
+@Service("registerationService")
+public class RegisterationModelImpl implements RegisterationInterface {
+	private SessionFactory sf;
+	
+	public RegisterationModelImpl() {
+		Configuration config = new Configuration().configure("hibernate.xml").addAnnotatedClass(Login.class);
+        config.addAnnotatedClass(Registeration.class);
+
+
+	     org.hibernate.service.ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
+	      sf = config.buildSessionFactory(reg);
+	}
+	
+	public int checkUserExist(String userName) {
+		Session session= null;
+		try {
+			
+		 session= sf.openSession();
+		session.beginTransaction();
+		
+        Query sql = session.createSQLQuery("select count(1) from userRegisteration where LOGINID = :userName ");
+        
+		sql.setParameter("userName", userName);
+		BigInteger count  = (BigInteger) sql.uniqueResult();
+		int a = count.intValue();
+		session.getTransaction().commit();
+		System.out.println(a);
+		if(a > 0)
+			return a;
+		
+	}
+	
+	
+	catch(Exception e) {
+		System.out.println(e.getMessage());
+	}
+		
+		finally {
+			session.close();
+		}
+		return 0;
+	}
+	
+	public void  saveLoginAttempt(String userName,String password)  {
+		
+		try {
+		Session session= sf.openSession();
+		session.beginTransaction();
+		Login l = new Login();
+		l.setUserName(userName);
+		l.setPassword(password);
+		session.save(l);
+		session.getTransaction().commit();
+		session.close();
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+}

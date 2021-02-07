@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	    <link rel="stylesheet" th:href="@{/login.css}"/>
+	
+	<link rel="stylesheet" href="login/login.css">
+		<link rel="stylesheet" href="BootStrapJquery/bootstrap.min.css">
+		<script  type="text/javascript" src="login/login.js" /></script>
+	
+		<script type="text/javascript" src="BootStrapJquery/bootstrap.min.js" ></script>
+	
+		<script  type="text/javascript" src="BootStrapJquery/jquery.min.js" ></script>
+	
+    <meta charset="UTF-8">
+    <title>Vendor and Bill Management - SignUp</title>
+    
+
+</head>
+<body>
+<div class="login-form">
+    <h1>Registeration Form</h1>
+	<form>
+    <div class="form-group "> <input type="text" placeholder="Full Name" id="fullName"> <i class="mdi mdi-account"></i> </div>
+
+    <div class="form-group "> <input type="text"  placeholder="Username " id="userName"> <i class="mdi mdi-account"></i> </div>
+    <div class="form-group log-status"> <input type="password"  placeholder="Password" id="password"></div>
+        <div class="form-group log-status"> <input type="password"  placeholder="Confirm Password" id="confirmPassword"></div>
+    <div class="form-group log-status"> <input type="email"  placeholder="Email" id="email"></div>
+    
+    <div class="form-group log-status"> <input type="text"  placeholder="Mobile Number" id="mobileNumber"></div>
+    </form>
+     <button type="button" class="log-btn" id="signUpButton" onclick="registerUser()"><i class="mdi mdi-account"></i> Sign Up</button></div>
+     
+     <br>
+</div>
+</body>
+</html>
+<script>
+
+$(document).ready(function(){
+	
+
+$('#signUpButton').click(function () {
+
+  
+	var userName = $("#userName").val()
+	var password = $("#password").val()
+	$.post('registerUser', {userName: userName,password:password}, function(response){ 
+		if(response.includes('User does not exist')){
+			$(".alert").css("display","block")
+		}
+		alert(response)
+		return false;
+	});
+	
+});
+});
+</script>

@@ -1,0 +1,22 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class LoginController {
+
+	
+	
+	 @RequestMapping({"","/","/index","/index.html"})
+	    public String index()
+	    {
+	        return "login/login.html";
+	    }
+
+	 @RequestMapping({"","/","/index","/index.html"})
+	    public String index1()
+	    {
+	        return "login/login.html";
+	    }
+}

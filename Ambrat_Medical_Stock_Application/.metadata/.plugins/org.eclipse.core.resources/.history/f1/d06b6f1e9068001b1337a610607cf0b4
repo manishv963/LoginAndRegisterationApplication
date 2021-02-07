@@ -1,0 +1,27 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+
+public class MediacalStockApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MediacalStockApplication.class, args);
+		
+		 Configuration config = new Configuration().configure("hibernate.xml").addAnnotatedClass(Laptop.class);
+	       config.configure("hibernate.xml").addAnnotatedClass(Student.class);
+
+	        org.hibernate.service.ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
+	        SessionFactory sf = config.buildSessionFactory(reg);
+	}
+
+}

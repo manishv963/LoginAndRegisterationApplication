@@ -1,0 +1,6 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.UserRegisteration;
+
+public interface LoginInterface {
+
+	public int checkUserExist(String userName);
+}

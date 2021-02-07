@@ -1,0 +1,6 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login;
+
+public interface LoginInterface {
+
+	
+}
