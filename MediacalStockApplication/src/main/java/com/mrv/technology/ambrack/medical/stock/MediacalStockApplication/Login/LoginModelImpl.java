@@ -1,0 +1,105 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login;
+
+import java.math.BigInteger;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.springframework.stereotype.Service;
+
+import com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.UserRegisteration.Registeration;
+
+
+@Service("loginService")
+public class LoginModelImpl implements LoginInterface {
+	private SessionFactory sf;
+	
+	public LoginModelImpl() {
+		Configuration config = new Configuration().configure("hibernate.xml").addAnnotatedClass(Login.class);
+        config.addAnnotatedClass(Registeration.class);
+
+
+	     org.hibernate.service.ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
+	      sf = config.buildSessionFactory(reg);
+	}
+	
+	public int checkUserExist(String userName) {
+		Session session= null;
+		try {
+			
+		 session= sf.openSession();
+		
+        Query sql = session.createSQLQuery("select count(1) from userRegisteration where LOGINID = :userName ");
+        
+		sql.setParameter("userName", userName);
+		BigInteger count  = (BigInteger) sql.uniqueResult();
+		int a = count.intValue();
+		System.out.println(a);
+		if(a > 0)
+			return a;
+		
+	}
+	
+	
+	catch(Exception e) {
+		System.out.println(e.getMessage());
+	}
+		
+		finally {
+			session.close();
+		}
+		return 0;
+	}
+	
+	public void  saveLoginAttempt(String userName,String password)  {
+		
+		try {
+		Session session= sf.openSession();
+		Login l = new Login();
+		l.setUserName(userName);
+		l.setPassword(password);
+		session.save(l);
+		session.close();
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	@Override
+	public int checkLoginCredentials(String userName, String password) {
+		
+		
+		Session session= null;
+		try {
+			
+		 session= sf.openSession();
+		session.beginTransaction();
+		
+        Query sql = session.createSQLQuery("select count(1) from userRegisteration where LOGINID = :userName AND  loginPassword = :password  ");
+        
+		sql.setParameter("userName", userName);
+		sql.setParameter("password", password);
+		
+		BigInteger count  = (BigInteger) sql.uniqueResult();
+		int a = count.intValue();
+		session.getTransaction().commit();
+		System.out.println(a);
+		if(a > 0)
+			return a;
+		
+	}
+	
+	
+	catch(Exception e) {
+		System.out.println(e.getMessage());
+	}
+		
+		finally {
+			session.close();
+		}
+		return 0;
+	}
+}

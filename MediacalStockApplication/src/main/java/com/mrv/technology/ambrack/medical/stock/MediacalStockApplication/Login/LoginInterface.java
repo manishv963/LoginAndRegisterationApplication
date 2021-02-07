@@ -1,0 +1,9 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login;
+
+public interface LoginInterface {
+	public void  saveLoginAttempt(String userName,String password);
+
+	public int checkUserExist(String userName);
+	public int checkLoginCredentials(String userName,String password);
+
+}

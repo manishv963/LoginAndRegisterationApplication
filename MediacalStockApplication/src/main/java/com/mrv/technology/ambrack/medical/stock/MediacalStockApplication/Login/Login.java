@@ -1,0 +1,60 @@
+package com.mrv.technology.ambrack.medical.stock.MediacalStockApplication.Login;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="login_log_info")
+public class Login {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="SRNO")
+	private long serialNo;
+	
+	@Column(name="LOGINID")
+	private String userName;
+	
+	@Column(name="loginPassword")
+	private String password;
+	
+	@Transient
+	private LocalDateTime loginDate;
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public long getSerialNo() {
+		return serialNo;
+	}
+	public void setSerialNo(long serialNo) {
+		this.serialNo = serialNo;
+	}
+	@Override
+	public String toString() {
+		return "Login [serialNo=" + serialNo + ", userName=" + userName + ", password=" + password + ", loginDate="
+				+ loginDate + "]";
+	}
+	public LocalDateTime getLoginDate() {
+		return loginDate;
+	}
+	public void setLoginDate(LocalDateTime loginDate) {
+		this.loginDate = loginDate;
+	}
+	
+}
